@@ -24,7 +24,9 @@ var Crustulum = {
 				fragment.appendChild(Crustulum.Menu.toggleButton('infiniteSwaps','Infinite Swaps','Causes your Pantheon swaps to regenerate almost instantly.'));
 				fragment.appendChild(Crustulum.Menu.subheading('Mini-game Enhancers'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('miracleSpells','Miracle Spell™','Grimoire spells will never fail.'));
-				fragment.appendChild(Crustulum.Menu.toggleButton('immortalPlants','Make Plants Immortal','Makes it so plants never wither. Does not affect weeds or fungi.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('immortalPlants','Make Plants Immortal','Makes it so plants never wither.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('immortalExceptWeeds','잡초 불멸 제외','잡초는 불멸에서 제외합니다.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('immortalExceptFungi','균류 불멸 제외','균류(곰팜이/버섯)는 불멸에서 제외합니다.'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('neverWeeds','Never Weed™','Makes it so weeds never spawn on their own. You can still plant them and they still may spread.'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('allGodsActive','Pantheon \'R Us','All Pantheon gods except for Cyclius will be active in slot one.'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('allGodsSlotOne','Power Of The Gods','All Pantheon gods will behave as if they are in slot 1 regardless of which slot they are in.'));
@@ -139,6 +141,8 @@ var Crustulum = {
 		'infiniteSwaps': false,
 		'blockWrath': false,
 		'immortalPlants': false,
+		'immortalExceptWeeds': false,
+		'immortalExceptFungi': false,
 		'neverWeeds': false,
 		'miracleSpells': false,
 		'allGodsActive': false,
@@ -293,10 +297,10 @@ var Crustulum = {
 					Crustulum.OG.gardenPlantsMortality = {};
 					Object.keys(Game.Objects['Farm'].minigame.plants).forEach((plantName) => {
 						let plant = Game.Objects['Farm'].minigame.plants[plantName];
-						if (!plant.weed && !plant.fungus) {
-							Crustulum.OG.gardenPlantsMortality[plantName] = plant.immortal;
-							Object.defineProperty(plant, 'immortal', {get:()=>{return (Crustulum.getConfig('immortalPlants')?true:Crustulum.OG.gardenPlantsMortality[plantName])},configurable: true});
-						}
+						if (Crustulum.getConfig('immortalExceptWeeds') && plant.weed) continue;
+						if (Crustulum.getConfig('immortalExceptFungi') && plant.fungus) continue;
+						Crustulum.OG.gardenPlantsMortality[plantName] = plant.immortal;
+						Object.defineProperty(plant, 'immortal', {get:()=>{return (Crustulum.getConfig('immortalPlants')?true:Crustulum.OG.gardenPlantsMortality[plantName])},configurable: true});
 					});
 				}
 		
