@@ -364,7 +364,7 @@ var Crustulum = {
 	ticks: {
 		'autoClicker': {
 			'intervalId': null,
-			'rate': 50,
+			'rate': 1,
 			'onTick': ()=>{
 				if (!Crustulum.getConfig('autoClicker')) return;
 				Game.ClickCookie();
@@ -372,7 +372,7 @@ var Crustulum = {
 		},
 		'autoGolden': {
 			'intervalId': null,
-			'rate': 500,
+			'rate': 100,
 			'onTick': ()=>{
 				if (!Crustulum.getConfig('autoGolden')) return;
 				Game.shimmers.forEach(function(shimmer) {
