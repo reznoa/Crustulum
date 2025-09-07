@@ -16,6 +16,9 @@ var Crustulum = {
 				fragment.appendChild(Crustulum.Menu.toggleButton('autoGolden','Auto Click Golden Cookies','Clicks any golden cookies for you.'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('autoReindeer','Auto Click Reindeer','Clicks on reindeer for you'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('autoNews','Auto Click News','Clicks on the news ticker for you.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('autoWrinkler','주름벌레 자동 클릭','주름벌레를 자동 클릭합니다.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('autoWrinklerOnlySucked','쿠키 먹은 주름벌레만 자동 클릭','쿠키를 주름벌레만 자동클릭합니다.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('autoWrinklerExceptShiny','빛나는 주름벌레 자동 클릭 제외','빛나는 주름벌레는 자동 클릭하지 않습니다.'));
 				fragment.appendChild(Crustulum.Menu.subheading('Golden Cookies'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('blockWrath','Block Wrath Cookies','Prevents wrath cookies from spawning.'));
 				fragment.appendChild(Crustulum.Menu.subheading('Infinite Stuff'));
@@ -136,6 +139,9 @@ var Crustulum = {
 		'autoGolden': false,
 		'autoReindeer': false,
 		'autoNews': false,
+		'autoWrinkler': false,
+		'autoWrinklerOnlySucked': true,
+		'autoWrinklerExceptShiny': false,
 		'infiniteCookies': false,
 		'infiniteMagic': false,
 		'infiniteSwaps': false,
@@ -390,6 +396,18 @@ var Crustulum = {
 			'onTick': ()=>{
 				if (!Crustulum.getConfig('autoNews')) return;
 				if (Game.TickerEffect && Game.TickerEffect.type == 'fortune') Game.tickerL.click();
+			},
+		},
+		'autoWrinkler': {
+			'intervalId': null,
+			'rate': 3000,
+			'onTick': ()=>{
+				if (!Crustulum.getConfig('autoWrinkler')) return;
+				for (var i = 0; i < 12; i++) {
+					if (Crustulum.getConfig('autoWrinklerOnlySucked') && Game.wrinklers[i].sucked == 0) continue;
+					if (Crustulum.getConfig('autoWrinklerExceptShiny') && Game.wrinklers[i].type == 1) continue;
+					Game.wrinklers[i].hp = 0;
+				}
 			},
 		},
 		'infiniteCookies': {
