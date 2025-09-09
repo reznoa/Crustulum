@@ -307,8 +307,8 @@ var Crustulum = {
 					Crustulum.OG.gardenPlantsMortality = {};
 					Object.keys(Game.Objects['Farm'].minigame.plants).forEach((plantName) => {
 						let plant = Game.Objects['Farm'].minigame.plants[plantName];
-						if (Crustulum.getConfig('immortalExceptWeeds') && plant.weed) continue;
-						if (Crustulum.getConfig('immortalExceptFungi') && plant.fungus) continue;
+						if (Crustulum.getConfig('immortalExceptWeeds') && plant.weed) return;
+						if (Crustulum.getConfig('immortalExceptFungi') && plant.fungus) return;
 						Crustulum.OG.gardenPlantsMortality[plantName] = plant.immortal;
 						Object.defineProperty(plant, 'immortal', {get:()=>{return (Crustulum.getConfig('immortalPlants')?true:Crustulum.OG.gardenPlantsMortality[plantName])},configurable: true});
 					});
