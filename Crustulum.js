@@ -19,6 +19,8 @@ var Crustulum = {
 				fragment.appendChild(Crustulum.Menu.toggleButton('autoWrinkler','주름벌레 자동 클릭','주름벌레를 자동 클릭합니다.'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('autoWrinklerOnlySucked','쿠키 먹은 주름벌레만 자동 클릭','쿠키를 먹은 주름벌레만 자동클릭합니다.'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('autoWrinklerExceptShiny','빛나는 주름벌레 자동 클릭 제외','빛나는 주름벌레는 자동 클릭하지 않습니다.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('autoMagic','마법 자동 클릭','마나 충전이 끝나면 \'운명의 손\' 마법을 자동클릭 합니다.'));
+				fragment.appendChild(Crustulum.Menu.toggleButton('autoMagicNotify','마법 자동 클릭 알림','마법 자동 클릭시 알림을 띄웁니다.'));
 				fragment.appendChild(Crustulum.Menu.subheading('Golden Cookies'));
 				fragment.appendChild(Crustulum.Menu.toggleButton('blockWrath','Block Wrath Cookies','Prevents wrath cookies from spawning.'));
 				fragment.appendChild(Crustulum.Menu.subheading('Infinite Stuff'));
@@ -142,6 +144,8 @@ var Crustulum = {
 		'autoWrinkler': false,
 		'autoWrinklerOnlySucked': true,
 		'autoWrinklerExceptShiny': false,
+		'autoMagic': false,
+		'autoMagicNotify': false,
 		'infiniteCookies': false,
 		'infiniteMagic': false,
 		'infiniteSwaps': false,
@@ -410,6 +414,23 @@ var Crustulum = {
 				}
 			},
 		},
+		'autoMagic': {
+			'intervalId': null,
+			'rate': 1000,
+			'onTick': ()=>{
+				if (!Crustulum.getConfig('autoMagic')) return;
+				var wizardSpell = 'hand of fate';
+				var grimoir = Game.ObjectsById[7].minigame;
+				if (grimoir.magic < grimoir.magicM) return;
+				if (grimoir.magic < (grimoir.spells[wizordSpell].costMin + grimoir.magicM*grimoir.spells[wizordSpell].costPercent)) return;
+
+				grimoir.castSpell(grimoir.spells[wizordSpell])
+
+				if (Crustulum.getConfig('autoMagicNotify')) {
+					Game.Notify('운명아 움직여라!', '마법을 부려 운명의 손을 움직였습니다.', [22,11]);
+				}
+			},
+		}
 		'infiniteCookies': {
 			'intervalId': null,
 			'rate': 100,
