@@ -430,7 +430,7 @@ var Crustulum = {
 					Game.Notify('운명아 움직여라!', '마법을 부려 운명의 손을 움직였습니다.', [22,11]);
 				}
 			},
-		}
+		},
 		'infiniteCookies': {
 			'intervalId': null,
 			'rate': 100,
