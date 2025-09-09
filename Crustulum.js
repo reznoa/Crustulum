@@ -422,9 +422,9 @@ var Crustulum = {
 				var wizardSpell = 'hand of fate';
 				var grimoir = Game.ObjectsById[7].minigame;
 				if (grimoir.magic < grimoir.magicM) return;
-				if (grimoir.magic < (grimoir.spells[wizordSpell].costMin + grimoir.magicM*grimoir.spells[wizordSpell].costPercent)) return;
+				if (grimoir.magic < (grimoir.spells[wizardSpell].costMin + grimoir.magicM*grimoir.spells[wizardSpell].costPercent)) return;
 
-				grimoir.castSpell(grimoir.spells[wizordSpell])
+				grimoir.castSpell(grimoir.spells[wizardSpell]);
 
 				if (Crustulum.getConfig('autoMagicNotify')) {
 					Game.Notify('운명아 움직여라!', '마법을 부려 운명의 손을 움직였습니다.', [22,11]);
