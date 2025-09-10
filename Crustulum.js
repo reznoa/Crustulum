@@ -146,6 +146,7 @@ var Crustulum = {
 		'autoWrinklerExceptShiny': false,
 		'autoMagic': false,
 		'autoMagicNotify': false,
+		'autoMagicCount': 0,
 		'infiniteCookies': false,
 		'infiniteMagic': false,
 		'infiniteSwaps': false,
@@ -425,9 +426,11 @@ var Crustulum = {
 				if (grimoir.magic < (grimoir.spells[wizardSpell].costMin + grimoir.magicM*grimoir.spells[wizardSpell].costPercent)) return;
 
 				grimoir.castSpell(grimoir.spells[wizardSpell]);
+				var autoMagicCount = Crustulum.getConfig('autoMagicCount') + 1;
+				Crustulum.setConfig('autoMagicCount', autoMagicCount);
 
 				if (Crustulum.getConfig('autoMagicNotify')) {
-					Game.Notify('운명아 움직여라!', '마법을 부려 운명의 손을 움직였습니다.', [22,11]);
+					Game.Notify('운명아 움직여라!', '마법을 부려 운명의 손을 움직였습니다. (이제까지 총 '+ autoMagicCount +'번)', [22,11]);
 				}
 			},
 		},
